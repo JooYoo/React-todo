@@ -10,7 +10,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className="Todo-container">
-          <input type="text" className="todo-input" placeholder="what needs to be done" />
+          <input type="text" className="todo-input" 
+                 placeholder="what needs to be done" 
+                 ref={this.todoInput} onKeyUp={this.addTodo}/>
 
           {this.state.todos.map((todo, index) =>
             <div key={todo.id} className = "todo-item">
@@ -29,7 +31,10 @@ class App extends Component {
     );
   }
 
+  todoInput = React.createRef();
+
   state = {
+    idForTodo: 3,
     todos: [
       {
         'id': 1,
@@ -50,6 +55,32 @@ class App extends Component {
         'editing': false
       }
     ]
+  }
+
+  addTodo = event => {
+    if(event.key === 'Enter'){
+      const todoInput = this.todoInput.current.value
+
+      if(todoInput.trim().length === 0){
+        return
+      }
+
+      this.setState((prevState, props) =>{
+        let todos = prevState.todos;
+        let idForTodo = prevState.idForTodo + 1;
+
+        todos.push({
+          id: idForTodo,
+          title: todoInput,
+          completed: false
+        })
+
+        return {todos, idForTodo}
+
+      });
+
+      this.todoInput.current.value = ''
+    }
   }
 
 }
