@@ -20,7 +20,7 @@ class App extends Component {
                 <input type="checkbox"/>
                 <div className="todo-item-label">{todo.title}</div>
               </div>
-              <div className="remove-item">
+              <div className="remove-item" onClick={(event) => this.deleteTodo(index)}>
                 &times;
               </div>
             </div>
@@ -81,6 +81,16 @@ class App extends Component {
 
       this.todoInput.current.value = ''
     }
+  }
+
+  deleteTodo= index =>{
+    this.setState((prevState, props) =>{
+      let todos = prevState.todos;
+
+      todos.splice(index, 1)
+
+      return{ todos };
+    });
   }
 
 }
