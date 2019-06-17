@@ -10,15 +10,15 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className="Todo-container">
-          <input type="text" className="todo-input" 
-                 placeholder="what needs to be done" 
-                 ref={this.todoInput} onKeyUp={this.addTodo}/>
+          <input type="text" className="todo-input"
+            placeholder="what needs to be done"
+            ref={this.todoInput} onKeyUp={this.addTodo} />
 
           {this.state.todos.map((todo, index) =>
-            <div key={todo.id} className = "todo-item">
+            <div key={todo.id} className="todo-item">
               <div className="todo-item-left">
-                <input type="checkbox"/>
-                <div className="todo-item-label">{todo.title}</div>
+                <input type="checkbox" onChange={(event) => this.checkTodo(todo, index, event)} />
+                <div className={"todo-item-label " + (todo.completed ? 'completed' : '')}>{todo.title}</div>
               </div>
               <div className="remove-item" onClick={(event) => this.deleteTodo(index)}>
                 &times;
@@ -58,14 +58,14 @@ class App extends Component {
   }
 
   addTodo = event => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       const todoInput = this.todoInput.current.value
 
-      if(todoInput.trim().length === 0){
+      if (todoInput.trim().length === 0) {
         return
       }
 
-      this.setState((prevState, props) =>{
+      this.setState((prevState, props) => {
         let todos = prevState.todos;
         let idForTodo = prevState.idForTodo + 1;
 
@@ -75,7 +75,7 @@ class App extends Component {
           completed: false
         })
 
-        return {todos, idForTodo}
+        return { todos, idForTodo }
 
       });
 
@@ -83,16 +83,24 @@ class App extends Component {
     }
   }
 
-  deleteTodo= index =>{
-    this.setState((prevState, props) =>{
+  deleteTodo = index => {
+    this.setState((prevState, props) => {
       let todos = prevState.todos;
 
       todos.splice(index, 1)
 
-      return{ todos };
+      return { todos };
     });
   }
 
+  checkTodo = (todo, index, event) => {
+    this.setState((prevState, props) => {
+      let todos = prevState.todos;
+      todo.completed = !todo.completed;
+
+      return { todos };
+    });
+  }
 }
 
 
