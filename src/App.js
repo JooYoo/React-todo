@@ -47,6 +47,28 @@ class App extends Component {
             </div>
           )}
 
+          <div className = "extra-container">
+            <div>
+              <label><input type="checkbox"/> Check All</label>
+            </div>
+            <div>{this.remaining()} items left</div>
+          </div>
+
+          <div className="extra-container">
+            <div>
+              <button>All</button>
+              <button>Active</button>
+              <button>Completed</button>
+            </div>
+
+            {this.todosCompletedCount()>0 &&
+            <div>
+              <button>Clear Completed</button>
+            </div>
+            }
+
+          </div>
+
         </div>
       </div>
     );
@@ -167,6 +189,14 @@ class App extends Component {
 
       return { todos };
     })
+  }
+
+  remaining=()=>{
+    return this.state.todos.filter(x=>!x.completed).length;
+  }
+
+  todosCompletedCount=()=>{
+    return this.state.todos.filter(x=>x.completed).length;
   }
 
 
