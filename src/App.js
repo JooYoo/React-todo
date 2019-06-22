@@ -14,10 +14,13 @@ class App extends Component {
             placeholder="what needs to be done"
             ref={this.todoInput} onKeyUp={this.addTodo} />
 
-          {this.state.todos.map((todo, index) =>
+          {this.todosFiltered().map((todo, index) =>
             <div key={todo.id} className="todo-item">
               <div className="todo-item-left">
-                <input type="checkbox" onChange={(event) => this.checkTodo(todo, index, event)} />
+                <input type="checkbox" 
+                       onChange={(event) => this.checkTodo(todo, index, event)} 
+                       checked={todo.completed}
+                />
 
                 {!todo.editing &&
                   <div
@@ -49,21 +52,35 @@ class App extends Component {
 
           <div className = "extra-container">
             <div>
-              <label><input type="checkbox"/> Check All</label>
+              <label><input type="checkbox" 
+                            checked={!this.anyRemaining()}
+                            onChange={this.checkAllTodos}/> 
+                      Check All
+              </label>
             </div>
             <div>{this.remaining()} items left</div>
           </div>
 
           <div className="extra-container">
             <div>
-              <button>All</button>
-              <button>Active</button>
-              <button>Completed</button>
+              <button onClick={(event)=>this.updateFilter('all')}       
+                      className={( this.state.filter ==='all'?'active':'')}
+                      >
+                        All
+              </button>
+              <button onClick={(event)=>this.updateFilter('active')}    
+                      className={( this.state.filter ==='active'?'active':'')}
+                      >Active
+              </button>
+              <button onClick={(event)=>this.updateFilter('completed')} 
+                      className={( this.state.filter ==='completed'?'active':'')}
+                      >Completed
+              </button>
             </div>
 
             {this.todosCompletedCount()>0 &&
             <div>
-              <button>Clear Completed</button>
+              <button onClick={this.clearCompleted}>Clear Completed</button>
             </div>
             }
 
@@ -77,6 +94,7 @@ class App extends Component {
   todoInput = React.createRef();
 
   state = {
+    filter:'all',
     beforeEditCache: '',
     idForTodo: 3,
     todos: [
@@ -195,8 +213,47 @@ class App extends Component {
     return this.state.todos.filter(x=>!x.completed).length;
   }
 
+  anyRemaining = () =>{
+    return this.remaining() != 0;
+  }
+
   todosCompletedCount=()=>{
     return this.state.todos.filter(x=>x.completed).length;
+  }
+
+  clearCompleted = () =>{
+    this.setState((prevState, props)=>{
+      let todos = prevState.todos;
+      todos = todos.filter(todo => !todo.completed);
+      return{todos};
+    })
+  }
+
+  updateFilter = filter =>{
+    this.setState({filter});
+  }
+
+  todosFiltered = () =>{
+    if (this.state.filter === 'all') {
+      return this.state.todos;
+    }else if(this.state.filter === "active"){
+      return this.state.todos.filter(x=>!x.completed);
+    }else if(this.state.filter === "completed"){
+      return this.state.todos.filter(x=>x.completed);
+    }
+    return this.state.todos;
+  }
+
+  checkAllTodos=(event)=>{
+    event.persist();
+
+    this.setState((prevState, props)=>{
+      let todos = prevState.todos;
+
+      todos.forEach((todo) => todo.completed = event.target.checked);
+
+      return{todos};
+    });
   }
 
 
