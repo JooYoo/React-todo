@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../App.css';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import TodoRemaining from './TodoRemaining';
 
 class App extends Component {
   render() {
@@ -59,7 +60,8 @@ class App extends Component {
                       Check All
               </label>
             </div>
-            <div>{this.remaining()} items left</div>
+            {/* <div>{this.remaining()} items left</div> */}
+            <TodoRemaining remaining={this.remaining()}/>
           </div>
 
           <div className="extra-container">
