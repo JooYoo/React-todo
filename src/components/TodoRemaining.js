@@ -1,16 +1,5 @@
-// import React, { Component } from 'react'
-
-// export default class TodoRemaining extends Component {
-//     render() {
-//         return (
-//             <div>
-//                 {this.props.remaining} items left
-//             </div>
-//         )
-//     }
-// }
-
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TodoRemaining = (props) => {
     return (
@@ -19,5 +8,9 @@ const TodoRemaining = (props) => {
         </div>
     );
 };
+
+TodoRemaining.propTypes = {
+    remaining: PropTypes.number.isRequired
+}
 
 export default TodoRemaining;
