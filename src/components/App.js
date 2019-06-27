@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
-import '../App.css';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import TodoRemaining from './TodoRemaining';
+import React, { Component } from "react";
+import logo from "../logo.svg";
+import "../App.css";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import TodoRemaining from "./TodoRemaining";
+import TodoItem from "./TodoItem";
 
 class App extends Component {
   render() {
@@ -12,72 +13,52 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className="Todo-container">
-          <input type="text" className="todo-input"
+          <input
+            type="text"
+            className="todo-input"
             placeholder="what needs to be done"
-            ref={this.todoInput} onKeyUp={this.addTodo} />
+            ref={this.todoInput}
+            onKeyUp={this.addTodo}
+          />
 
-          {this.todosFiltered().map((todo, index) =>
-            <div key={todo.id} className="todo-item">
-              <div className="todo-item-left">
-                <input type="checkbox" 
-                       onChange={(event) => this.checkTodo(todo, index, event)} 
-                       checked={todo.completed}
-                />
+          {this.todosFiltered().map((todo, index) => (
+            <TodoItem key={todo.id} todo={todo} index={index} />
+          ))}
 
-                {!todo.editing &&
-                  <div
-                    className={"todo-item-label " + (todo.completed ? 'completed' : '')}
-                    onDoubleClick={(event) => this.editTodo(todo, index, event)}>
-                    {todo.title}
-                  </div>
-                }
-                {todo.editing &&
-                  <input
-                    className="todo-item-edit" type="text" autoFocus
-                    defaultValue={todo.title}
-                    onBlur={(event) => this.doneEdit(todo, index, event)}
-                    onKeyUp={(event) => {
-                      if (event.key === 'Enter') {
-                        this.doneEdit(todo, index, event);
-                      } else if (event.key === 'Escape') {
-                        this.cancelEdit(todo, index, event);
-                      }
-                    }}
-                  />
-                }
-              </div>
-              <div className="remove-item" onClick={(event) => this.deleteTodo(index)}>
-                &times;
-              </div>
-            </div>
-          )}
-
-          <div className = "extra-container">
+          <div className="extra-container">
             <div>
-              <label><input type="checkbox" 
-                            checked={!this.anyRemaining()}
-                            onChange={this.checkAllTodos}/> 
-                      Check All
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!this.anyRemaining()}
+                  onChange={this.checkAllTodos}
+                />
+                Check All
               </label>
             </div>
             {/* <div>{this.remaining()} items left</div> */}
-            <TodoRemaining remaining={this.remaining()}/>
+            <TodoRemaining remaining={this.remaining()} />
           </div>
 
           <div className="extra-container">
             <div>
-              <button onClick={(event)=>this.updateFilter('all')}       
-                      className={( this.state.filter ==='all'?'active':'')}
-                      >
-                        All
+              <button
+                onClick={event => this.updateFilter("all")}
+                className={this.state.filter === "all" ? "active" : ""}
+              >
+                All
               </button>
-              <button onClick={(event)=>this.updateFilter('active')}    
-                      className={( this.state.filter ==='active'?'active':'')}
-                      >Active
+              <button
+                onClick={event => this.updateFilter("active")}
+                className={this.state.filter === "active" ? "active" : ""}
+              >
+                Active
               </button>
-              <button onClick={(event)=>this.updateFilter('completed')} 
-                      className={( this.state.filter ==='completed'?'active':'')}
-                      >Completed
+              <button
+                onClick={event => this.updateFilter("completed")}
+                className={this.state.filter === "completed" ? "active" : ""}
+              >
+                Completed
               </button>
             </div>
 
@@ -86,15 +67,13 @@ class App extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
             >
-            {this.todosCompletedCount()>0 &&
-            <div>
-              <button onClick={this.clearCompleted}>Clear Completed</button>
-            </div>
-            }
+              {this.todosCompletedCount() > 0 && (
+                <div>
+                  <button onClick={this.clearCompleted}>Clear Completed</button>
+                </div>
+              )}
             </ReactCSSTransitionGroup>
-
           </div>
-
         </div>
       </div>
     );
@@ -103,37 +82,37 @@ class App extends Component {
   todoInput = React.createRef();
 
   state = {
-    filter:'all',
-    beforeEditCache: '',
+    filter: "all",
+    beforeEditCache: "",
     idForTodo: 3,
     todos: [
       {
-        'id': 1,
-        'title': 'xBox',
-        'completed': false,
-        'editing': false
+        id: 1,
+        title: "xBox",
+        completed: false,
+        editing: false
       },
       {
-        'id': 2,
-        'title': 'PlayStation',
-        'completed': false,
-        'editing': false
+        id: 2,
+        title: "PlayStation",
+        completed: false,
+        editing: false
       },
       {
-        'id': 3,
-        'title': 'Switch',
-        'completed': false,
-        'editing': false
+        id: 3,
+        title: "Switch",
+        completed: false,
+        editing: false
       }
     ]
-  }
+  };
 
   addTodo = event => {
-    if (event.key === 'Enter') {
-      const todoInput = this.todoInput.current.value
+    if (event.key === "Enter") {
+      const todoInput = this.todoInput.current.value;
 
       if (todoInput.trim().length === 0) {
-        return
+        return;
       }
 
       this.setState((prevState, props) => {
@@ -144,25 +123,24 @@ class App extends Component {
           id: idForTodo,
           title: todoInput,
           completed: false
-        })
+        });
 
-        return { todos, idForTodo }
-
+        return { todos, idForTodo };
       });
 
-      this.todoInput.current.value = ''
+      this.todoInput.current.value = "";
     }
-  }
+  };
 
   deleteTodo = index => {
     this.setState((prevState, props) => {
       let todos = prevState.todos;
 
-      todos.splice(index, 1)
+      todos.splice(index, 1);
 
       return { todos };
     });
-  }
+  };
 
   checkTodo = (todo, index, event) => {
     this.setState((prevState, props) => {
@@ -173,7 +151,7 @@ class App extends Component {
 
       return { todos };
     });
-  }
+  };
 
   editTodo = (todo, index, event) => {
     this.setState((prevState, props) => {
@@ -184,7 +162,7 @@ class App extends Component {
 
       return { todos, beforeEditCache: todo.title };
     });
-  }
+  };
 
   doneEdit = (todo, index, event) => {
     event.persist();
@@ -201,9 +179,9 @@ class App extends Component {
 
       todos.splice(index, 1, todo);
 
-      return { todos }
+      return { todos };
     });
-  }
+  };
 
   cancelEdit = (todo, index, event) => {
     this.setState((prevState, props) => {
@@ -215,59 +193,55 @@ class App extends Component {
       todos.splice(index, 1, todo);
 
       return { todos };
-    })
-  }
+    });
+  };
 
-  remaining=()=>{
-    return this.state.todos.filter(x=>!x.completed).length;
-  }
+  remaining = () => {
+    return this.state.todos.filter(x => !x.completed).length;
+  };
 
-  anyRemaining = () =>{
+  anyRemaining = () => {
     return this.remaining() != 0;
-  }
+  };
 
-  todosCompletedCount=()=>{
-    return this.state.todos.filter(x=>x.completed).length;
-  }
+  todosCompletedCount = () => {
+    return this.state.todos.filter(x => x.completed).length;
+  };
 
-  clearCompleted = () =>{
-    this.setState((prevState, props)=>{
+  clearCompleted = () => {
+    this.setState((prevState, props) => {
       let todos = prevState.todos;
       todos = todos.filter(todo => !todo.completed);
-      return{todos};
-    })
-  }
+      return { todos };
+    });
+  };
 
-  updateFilter = filter =>{
-    this.setState({filter});
-  }
+  updateFilter = filter => {
+    this.setState({ filter });
+  };
 
-  todosFiltered = () =>{
-    if (this.state.filter === 'all') {
+  todosFiltered = () => {
+    if (this.state.filter === "all") {
       return this.state.todos;
-    }else if(this.state.filter === "active"){
-      return this.state.todos.filter(x=>!x.completed);
-    }else if(this.state.filter === "completed"){
-      return this.state.todos.filter(x=>x.completed);
+    } else if (this.state.filter === "active") {
+      return this.state.todos.filter(x => !x.completed);
+    } else if (this.state.filter === "completed") {
+      return this.state.todos.filter(x => x.completed);
     }
     return this.state.todos;
-  }
+  };
 
-  checkAllTodos=(event)=>{
+  checkAllTodos = event => {
     event.persist();
 
-    this.setState((prevState, props)=>{
+    this.setState((prevState, props) => {
       let todos = prevState.todos;
 
-      todos.forEach((todo) => todo.completed = event.target.checked);
+      todos.forEach(todo => (todo.completed = event.target.checked));
 
-      return{todos};
+      return { todos };
     });
-  }
-
-
+  };
 }
-
-
 
 export default App;
