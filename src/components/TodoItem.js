@@ -7,14 +7,14 @@ const TodoItem = props => {
       <div className="todo-item-left">
         <input
           type="checkbox"
-          onChange={event => this.checkTodo(props.todo, props.index, event)}
+          onChange={event => props.checkTodo(props.todo, props.index, event)}
           checked={props.todo.completed}
         />
 
         {!props.todo.editing && (
           <div
             className={"todo-item-label " + (props.todo.completed ? "completed" : "")}
-            onDoubleClick={event => this.editTodo(props.todo, props.index, event)}
+            onDoubleClick={event => props.editTodo(props.todo, props.index, event)}
           >
             {props.todo.title}
           </div>
@@ -25,18 +25,18 @@ const TodoItem = props => {
             type="text"
             autoFocus
             defaultValue={props.todo.title}
-            onBlur={event => this.doneEdit(props.todo, props.index, event)}
+            onBlur={event => props.doneEdit(props.todo, props.index, event)}
             onKeyUp={event => {
               if (event.key === "Enter") {
-                this.doneEdit(props.todo, props.index, event);
+                props.doneEdit(props.todo, props.index, event);
               } else if (event.key === "Escape") {
-                this.cancelEdit(props.todo, props.index, event);
+                props.cancelEdit(props.todo, props.index, event);
               }
             }}
           />
         )}
       </div>
-      <div className="remove-item" onClick={event => this.deleteTodo(props.index)}>
+      <div className="remove-item" onClick={event => props.deleteTodo(props.index)}>
         &times;
       </div>
     </div>

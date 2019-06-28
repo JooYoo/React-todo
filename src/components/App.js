@@ -22,7 +22,14 @@ class App extends Component {
           />
 
           {this.todosFiltered().map((todo, index) => (
-            <TodoItem key={todo.id} todo={todo} index={index} />
+            <TodoItem 
+              key={todo.id} 
+              todo={todo} 
+              index={index}
+              checkTodo={this.checkTodo}
+              doneEdit={this.doneEdit}
+              cancelEdit={this.cancelEdit}
+              deleteTodo={this.deleteTodo} />
           ))}
 
           <div className="extra-container">
