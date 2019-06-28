@@ -27,6 +27,7 @@ class App extends Component {
               todo={todo} 
               index={index}
               checkTodo={this.checkTodo}
+              editTodo={this.editTodo}
               doneEdit={this.doneEdit}
               cancelEdit={this.cancelEdit}
               deleteTodo={this.deleteTodo} />
