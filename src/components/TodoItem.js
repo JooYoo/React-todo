@@ -43,6 +43,14 @@ const TodoItem = props => {
   );
 };
 
-TodoItem.propTypes = {};
+TodoItem.propTypes = {
+  todo: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  checkTodo: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
+  doneEdit: PropTypes.func.isRequired,
+  cancelEdit: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired
+};
 
 export default TodoItem;

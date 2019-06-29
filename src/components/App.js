@@ -4,6 +4,7 @@ import "../App.css";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import TodoRemaining from "./TodoRemaining";
 import TodoItem from "./TodoItem";
+import TodosCheckAll from "./TodosCheckAll";
 
 class App extends Component {
   render() {
@@ -22,29 +23,23 @@ class App extends Component {
           />
 
           {this.todosFiltered().map((todo, index) => (
-            <TodoItem 
-              key={todo.id} 
-              todo={todo} 
+            <TodoItem
+              key={todo.id}
+              todo={todo}
               index={index}
               checkTodo={this.checkTodo}
               editTodo={this.editTodo}
               doneEdit={this.doneEdit}
               cancelEdit={this.cancelEdit}
-              deleteTodo={this.deleteTodo} />
+              deleteTodo={this.deleteTodo}
+            />
           ))}
 
           <div className="extra-container">
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={!this.anyRemaining()}
-                  onChange={this.checkAllTodos}
-                />
-                Check All
-              </label>
-            </div>
-            {/* <div>{this.remaining()} items left</div> */}
+            <TodosCheckAll
+              anyRemaining={this.anyRemaining}
+              checkAllTodos={this.checkAllTodos}
+            />
             <TodoRemaining remaining={this.remaining()} />
           </div>
 
