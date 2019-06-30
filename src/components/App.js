@@ -5,6 +5,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import TodoRemaining from "./TodoRemaining";
 import TodoItem from "./TodoItem";
 import TodosCheckAll from "./TodosCheckAll";
+import TodoFiltered from "./TodoFiltered";
 
 class App extends Component {
   render() {
@@ -44,26 +45,10 @@ class App extends Component {
           </div>
 
           <div className="extra-container">
-            <div>
-              <button
-                onClick={event => this.updateFilter("all")}
-                className={this.state.filter === "all" ? "active" : ""}
-              >
-                All
-              </button>
-              <button
-                onClick={event => this.updateFilter("active")}
-                className={this.state.filter === "active" ? "active" : ""}
-              >
-                Active
-              </button>
-              <button
-                onClick={event => this.updateFilter("completed")}
-                className={this.state.filter === "completed" ? "active" : ""}
-              >
-                Completed
-              </button>
-            </div>
+            <TodoFiltered
+              updateFilter={this.updateFilter}
+              filter={this.state.filter}
+            />
 
             <ReactCSSTransitionGroup
               transitionName="fade"
