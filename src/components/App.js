@@ -6,6 +6,7 @@ import TodoRemaining from "./TodoRemaining";
 import TodoItem from "./TodoItem";
 import TodosCheckAll from "./TodosCheckAll";
 import TodoFiltered from "./TodoFiltered";
+import TodoClearCompleted from "./TodoClearCompleted";
 
 class App extends Component {
   render() {
@@ -55,11 +56,9 @@ class App extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
             >
-              {this.todosCompletedCount() > 0 && (
-                <div>
-                  <button onClick={this.clearCompleted}>Clear Completed</button>
-                </div>
-              )}
+              {this.todosCompletedCount() > 0 && 
+                <TodoClearCompleted clearCompleted={this.clearCompleted}/>
+              }
             </ReactCSSTransitionGroup>
           </div>
         </div>
