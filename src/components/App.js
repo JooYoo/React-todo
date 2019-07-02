@@ -7,9 +7,13 @@ import TodoItem from "./TodoItem";
 import TodosCheckAll from "./TodosCheckAll";
 import TodoFiltered from "./TodoFiltered";
 import TodoClearCompleted from "./TodoClearCompleted";
+import {inject, observer} from 'mobx-react';
 
+@inject('TodoStore')
+@observer
 class App extends Component {
   render() {
+    const TodoStore =this.props.TodoStore;
     return (
       <div className="App">
         <header className="App-header">
@@ -24,7 +28,7 @@ class App extends Component {
             onKeyUp={this.addTodo}
           />
 
-          {this.todosFiltered().map((todo, index) => (
+          {TodoStore.todos.map((todo, index) => (
             <TodoItem
               key={todo.id}
               todo={todo}
