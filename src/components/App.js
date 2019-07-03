@@ -24,8 +24,8 @@ class App extends Component {
             type="text"
             className="todo-input"
             placeholder="what needs to be done"
-            ref={this.todoInput}
-            onKeyUp={this.addTodo}
+            ref={TodoStore.todoInput}
+            onKeyUp={TodoStore.addTodo}
           />
 
           {TodoStore.todos.map((todo, index) => (
@@ -70,7 +70,7 @@ class App extends Component {
     );
   }
 
-  todoInput = React.createRef();
+  // todoInput = React.createRef();
 
   state = {
     filter: "all",
@@ -98,30 +98,30 @@ class App extends Component {
     ]
   };
 
-  addTodo = event => {
-    if (event.key === "Enter") {
-      const todoInput = this.todoInput.current.value;
+  // addTodo = event => {
+  //   if (event.key === "Enter") {
+  //     const todoInput = this.todoInput.current.value;
 
-      if (todoInput.trim().length === 0) {
-        return;
-      }
+  //     if (todoInput.trim().length === 0) {
+  //       return;
+  //     }
 
-      this.setState((prevState, props) => {
-        let todos = prevState.todos;
-        let idForTodo = prevState.idForTodo + 1;
+  //     this.setState((prevState, props) => {
+  //       let todos = prevState.todos;
+  //       let idForTodo = prevState.idForTodo + 1;
 
-        todos.push({
-          id: idForTodo,
-          title: todoInput,
-          completed: false
-        });
+  //       todos.push({
+  //         id: idForTodo,
+  //         title: todoInput,
+  //         completed: false
+  //       });
 
-        return { todos, idForTodo };
-      });
+  //       return { todos, idForTodo };
+  //     });
 
-      this.todoInput.current.value = "";
-    }
-  };
+  //     this.todoInput.current.value = "";
+  //   }
+  // };
 
   deleteTodo = index => {
     this.setState((prevState, props) => {
