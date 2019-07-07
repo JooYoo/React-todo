@@ -45,6 +45,20 @@ class TodoStore {
       this.todoInput.current.value = "";
     }
   };
+
+  @action deleteTodo = index => {
+    this.todos.splice(index, 1);
+  };
+
+  @action checkTodo = (todo, index, event) => {
+    todo.completed = !todo.completed;
+    this.todos.splice(index, 1, todo);
+  };
+
+  @action editTodo = (todo, index, event) => {
+    todo.editing = true;
+    this.todos.splice(index, 1, todo);
+  };
 }
 
 const store = new TodoStore();

@@ -1,20 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { inject, observer } from 'mobx-react';
 
-const TodoItem = props => {
+const TodoItem = inject('TodoStore')(observer(props => {
+  const TodoStore = props.TodoStore;
+
   return (
     <div key={props.todo.id} className="todo-item">
       <div className="todo-item-left">
         <input
           type="checkbox"
-          onChange={event => props.checkTodo(props.todo, props.index, event)}
+          onChange={event => TodoStore.checkTodo(props.todo, props.index, event)}
           checked={props.todo.completed}
         />
 
         {!props.todo.editing && (
           <div
             className={"todo-item-label " + (props.todo.completed ? "completed" : "")}
-            onDoubleClick={event => props.editTodo(props.todo, props.index, event)}
+            onDoubleClick={event => TodoStore.editTodo(props.todo, props.index, event)}
           >
             {props.todo.title}
           </div>
@@ -36,21 +39,21 @@ const TodoItem = props => {
           />
         )}
       </div>
-      <div className="remove-item" onClick={event => props.deleteTodo(props.index)}>
+      <div className="remove-item" onClick={event => TodoStore.deleteTodo(props.index)}>
         &times;
       </div>
     </div>
   );
-};
+}));
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  checkTodo: PropTypes.func.isRequired,
-  editTodo: PropTypes.func.isRequired,
+  // checkTodo: PropTypes.func.isRequired,
+  // editTodo: PropTypes.func.isRequired,
   doneEdit: PropTypes.func.isRequired,
   cancelEdit: PropTypes.func.isRequired,
-  deleteTodo: PropTypes.func.isRequired
+  // deleteTodo: PropTypes.func.isRequired
 };
 
 export default TodoItem;

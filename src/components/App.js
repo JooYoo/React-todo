@@ -33,11 +33,11 @@ class App extends Component {
               key={todo.id}
               todo={todo}
               index={index}
-              checkTodo={this.checkTodo}
-              editTodo={this.editTodo}
+              // checkTodo={this.checkTodo}
+              // editTodo={this.editTodo}
               doneEdit={this.doneEdit}
               cancelEdit={this.cancelEdit}
-              deleteTodo={this.deleteTodo}
+              // deleteTodo={this.deleteTodo}
             />
           ))}
 
@@ -98,51 +98,26 @@ class App extends Component {
     ]
   };
 
-  // addTodo = event => {
-  //   if (event.key === "Enter") {
-  //     const todoInput = this.todoInput.current.value;
+  // deleteTodo = index => {
+  //   this.setState((prevState, props) => {
+  //     let todos = prevState.todos;
 
-  //     if (todoInput.trim().length === 0) {
-  //       return;
-  //     }
+  //     todos.splice(index, 1);
 
-  //     this.setState((prevState, props) => {
-  //       let todos = prevState.todos;
-  //       let idForTodo = prevState.idForTodo + 1;
-
-  //       todos.push({
-  //         id: idForTodo,
-  //         title: todoInput,
-  //         completed: false
-  //       });
-
-  //       return { todos, idForTodo };
-  //     });
-
-  //     this.todoInput.current.value = "";
-  //   }
+  //     return { todos };
+  //   });
   // };
 
-  deleteTodo = index => {
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
+  // checkTodo = (todo, index, event) => {
+  //   this.setState((prevState, props) => {
+  //     let todos = prevState.todos;
+  //     todo.completed = !todo.completed;
 
-      todos.splice(index, 1);
+  //     todos.splice(index, 1, todo);
 
-      return { todos };
-    });
-  };
-
-  checkTodo = (todo, index, event) => {
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
-      todo.completed = !todo.completed;
-
-      todos.splice(index, 1, todo);
-
-      return { todos };
-    });
-  };
+  //     return { todos };
+  //   });
+  // };
 
   editTodo = (todo, index, event) => {
     this.setState((prevState, props) => {
