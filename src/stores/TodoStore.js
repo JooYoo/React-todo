@@ -57,8 +57,26 @@ class TodoStore {
 
   @action editTodo = (todo, index, event) => {
     todo.editing = true;
+    this.beforeEditCache = todo.title
     this.todos.splice(index, 1, todo);
   };
+
+  @action doneEdit = (todo, index, event) => {
+    todo.editing = false;
+    if (event.target.value.trim().length === 0) {
+      todo.title = this.beforeEditCache;
+    } else {
+      todo.title = event.target.value;
+    }
+    this.todos.splice(index, 1, todo);
+  };
+
+  @action cancelEdit = (todo, index, event) => {
+    todo.title = this.beforeEditCache;
+    todo.editing = false;
+    this.todos.splice(index, 1, todo);
+  };
+
 }
 
 const store = new TodoStore();

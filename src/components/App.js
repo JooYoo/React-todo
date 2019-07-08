@@ -33,11 +33,6 @@ class App extends Component {
               key={todo.id}
               todo={todo}
               index={index}
-              // checkTodo={this.checkTodo}
-              // editTodo={this.editTodo}
-              doneEdit={this.doneEdit}
-              cancelEdit={this.cancelEdit}
-              // deleteTodo={this.deleteTodo}
             />
           ))}
 
@@ -96,70 +91,6 @@ class App extends Component {
         editing: false
       }
     ]
-  };
-
-  // deleteTodo = index => {
-  //   this.setState((prevState, props) => {
-  //     let todos = prevState.todos;
-
-  //     todos.splice(index, 1);
-
-  //     return { todos };
-  //   });
-  // };
-
-  // checkTodo = (todo, index, event) => {
-  //   this.setState((prevState, props) => {
-  //     let todos = prevState.todos;
-  //     todo.completed = !todo.completed;
-
-  //     todos.splice(index, 1, todo);
-
-  //     return { todos };
-  //   });
-  // };
-
-  editTodo = (todo, index, event) => {
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
-      todo.editing = true;
-
-      todos.splice(index, 1, todo);
-
-      return { todos, beforeEditCache: todo.title };
-    });
-  };
-
-  doneEdit = (todo, index, event) => {
-    event.persist();
-
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
-      todo.editing = false;
-
-      if (event.target.value.trim().length === 0) {
-        todo.title = prevState.beforeEditCache;
-      } else {
-        todo.title = event.target.value;
-      }
-
-      todos.splice(index, 1, todo);
-
-      return { todos };
-    });
-  };
-
-  cancelEdit = (todo, index, event) => {
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
-
-      todo.title = prevState.beforeEditCache;
-      todo.editing = false;
-
-      todos.splice(index, 1, todo);
-
-      return { todos };
-    });
   };
 
   remaining = () => {

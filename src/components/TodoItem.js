@@ -28,18 +28,18 @@ const TodoItem = inject('TodoStore')(observer(props => {
             type="text"
             autoFocus
             defaultValue={props.todo.title}
-            onBlur={event => props.doneEdit(props.todo, props.index, event)}
+            onBlur={event => TodoStore.doneEdit(props.todo, props.index, event)}
             onKeyUp={event => {
               if (event.key === "Enter") {
-                props.doneEdit(props.todo, props.index, event);
+                TodoStore.doneEdit(props.todo, props.index, event);
               } else if (event.key === "Escape") {
-                props.cancelEdit(props.todo, props.index, event);
+                TodoStore.cancelEdit(props.todo, props.index, event);
               }
             }}
           />
         )}
       </div>
-      <div className="remove-item" onClick={event => TodoStore.deleteTodo(props.index)}>
+      <div className="remove-item" onClick={(event) => TodoStore.deleteTodo(props.index)}>
         &times;
       </div>
     </div>
@@ -51,8 +51,8 @@ TodoItem.propTypes = {
   index: PropTypes.number.isRequired,
   // checkTodo: PropTypes.func.isRequired,
   // editTodo: PropTypes.func.isRequired,
-  doneEdit: PropTypes.func.isRequired,
-  cancelEdit: PropTypes.func.isRequired,
+  // doneEdit: PropTypes.func.isRequired,
+  // cancelEdit: PropTypes.func.isRequired,
   // deleteTodo: PropTypes.func.isRequired
 };
 
