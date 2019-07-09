@@ -37,11 +37,11 @@ class App extends Component {
           ))}
 
           <div className="extra-container">
-            <TodosCheckAll
+            {/* <TodosCheckAll
               anyRemaining={this.anyRemaining}
               checkAllTodos={this.checkAllTodos}
-            />
-            <TodoRemaining remaining={this.remaining()} />
+            /> */}
+            <TodoRemaining />
           </div>
 
           <div className="extra-container">
@@ -93,9 +93,9 @@ class App extends Component {
     ]
   };
 
-  remaining = () => {
-    return this.state.todos.filter(x => !x.completed).length;
-  };
+  // remaining = () => {
+  //   return this.state.todos.filter(x => !x.completed).length;
+  // };
 
   anyRemaining = () => {
     return this.remaining() != 0;

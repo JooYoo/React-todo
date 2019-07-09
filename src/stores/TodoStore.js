@@ -57,7 +57,7 @@ class TodoStore {
 
   @action editTodo = (todo, index, event) => {
     todo.editing = true;
-    this.beforeEditCache = todo.title
+    this.beforeEditCache = todo.title;
     this.todos.splice(index, 1, todo);
   };
 
@@ -77,6 +77,9 @@ class TodoStore {
     this.todos.splice(index, 1, todo);
   };
 
+  @computed get remaining() {
+    return this.todos.filter(x => !x.completed).length;
+  };
 }
 
 const store = new TodoStore();

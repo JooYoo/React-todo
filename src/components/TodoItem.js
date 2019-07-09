@@ -10,14 +10,14 @@ const TodoItem = inject('TodoStore')(observer(props => {
       <div className="todo-item-left">
         <input
           type="checkbox"
-          onChange={event => TodoStore.checkTodo(props.todo, props.index, event)}
+          onChange={(event) => TodoStore.checkTodo(props.todo, props.index, event)}
           checked={props.todo.completed}
         />
 
         {!props.todo.editing && (
           <div
             className={"todo-item-label " + (props.todo.completed ? "completed" : "")}
-            onDoubleClick={event => TodoStore.editTodo(props.todo, props.index, event)}
+            onDoubleClick={(event) => TodoStore.editTodo(props.todo, props.index, event)}
           >
             {props.todo.title}
           </div>
@@ -28,8 +28,8 @@ const TodoItem = inject('TodoStore')(observer(props => {
             type="text"
             autoFocus
             defaultValue={props.todo.title}
-            onBlur={event => TodoStore.doneEdit(props.todo, props.index, event)}
-            onKeyUp={event => {
+            onBlur={(event) => TodoStore.doneEdit(props.todo, props.index, event)}
+            onKeyUp={(event) => {
               if (event.key === "Enter") {
                 TodoStore.doneEdit(props.todo, props.index, event);
               } else if (event.key === "Escape") {
@@ -49,11 +49,7 @@ const TodoItem = inject('TodoStore')(observer(props => {
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  // checkTodo: PropTypes.func.isRequired,
-  // editTodo: PropTypes.func.isRequired,
-  // doneEdit: PropTypes.func.isRequired,
-  // cancelEdit: PropTypes.func.isRequired,
-  // deleteTodo: PropTypes.func.isRequired
+  TodoStore: PropTypes.object.isRequired,
 };
 
 export default TodoItem;
