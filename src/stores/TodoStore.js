@@ -77,8 +77,16 @@ class TodoStore {
     this.todos.splice(index, 1, todo);
   };
 
+  @action checkAllTodos = event => {
+    this.todos.forEach(todo => (todo.completed = event.target.checked));
+  };
+
   @computed get remaining() {
     return this.todos.filter(x => !x.completed).length;
+  };
+
+  @computed get anyRemaining() {
+    return this.remaining != 0;
   };
 }
 

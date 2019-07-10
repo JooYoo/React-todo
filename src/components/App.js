@@ -7,13 +7,13 @@ import TodoItem from "./TodoItem";
 import TodosCheckAll from "./TodosCheckAll";
 import TodoFiltered from "./TodoFiltered";
 import TodoClearCompleted from "./TodoClearCompleted";
-import {inject, observer} from 'mobx-react';
+import { inject, observer } from "mobx-react";
 
-@inject('TodoStore')
+@inject("TodoStore")
 @observer
 class App extends Component {
   render() {
-    const TodoStore =this.props.TodoStore;
+    const TodoStore = this.props.TodoStore;
     return (
       <div className="App">
         <header className="App-header">
@@ -29,18 +29,11 @@ class App extends Component {
           />
 
           {TodoStore.todos.map((todo, index) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              index={index}
-            />
+            <TodoItem key={todo.id} todo={todo} index={index} />
           ))}
 
           <div className="extra-container">
-            {/* <TodosCheckAll
-              anyRemaining={this.anyRemaining}
-              checkAllTodos={this.checkAllTodos}
-            /> */}
+            <TodosCheckAll />
             <TodoRemaining />
           </div>
 
@@ -55,17 +48,15 @@ class App extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
             >
-              {this.todosCompletedCount() > 0 && 
-                <TodoClearCompleted clearCompleted={this.clearCompleted}/>
-              }
+              {this.todosCompletedCount() > 0 && (
+                <TodoClearCompleted clearCompleted={this.clearCompleted} />
+              )}
             </ReactCSSTransitionGroup>
           </div>
         </div>
       </div>
     );
   }
-
-  // todoInput = React.createRef();
 
   state = {
     filter: "all",
@@ -97,9 +88,9 @@ class App extends Component {
   //   return this.state.todos.filter(x => !x.completed).length;
   // };
 
-  anyRemaining = () => {
-    return this.remaining() != 0;
-  };
+  // anyRemaining = () => {
+  //   return this.remaining() != 0;
+  // };
 
   todosCompletedCount = () => {
     return this.state.todos.filter(x => x.completed).length;
@@ -128,17 +119,17 @@ class App extends Component {
     return this.state.todos;
   };
 
-  checkAllTodos = event => {
-    event.persist();
+  // checkAllTodos = event => {
+  //   event.persist();
 
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
+  //   this.setState((prevState, props) => {
+  //     let todos = prevState.todos;
 
-      todos.forEach(todo => (todo.completed = event.target.checked));
+  //     todos.forEach(todo => (todo.completed = event.target.checked));
 
-      return { todos };
-    });
-  };
+  //     return { todos };
+  //   });
+  // };
 }
 
 export default App;
