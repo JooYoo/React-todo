@@ -88,6 +88,21 @@ class TodoStore {
   @computed get anyRemaining() {
     return this.remaining != 0;
   };
+
+  @action updateFilter = filter => {
+    this.filter = filter;
+  };
+
+  @computed get todosFiltered(){
+    if (this.filter === "all") {
+      return this.todos;
+    } else if (this.filter === "active") {
+      return this.todos.filter(x => !x.completed);
+    } else if (this.filter === "completed") {
+      return this.todos.filter(x => x.completed);
+    }
+    return this.todos;
+  };
 }
 
 const store = new TodoStore();

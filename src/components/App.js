@@ -28,7 +28,7 @@ class App extends Component {
             onKeyUp={TodoStore.addTodo}
           />
 
-          {TodoStore.todos.map((todo, index) => (
+          {TodoStore.todosFiltered.map((todo, index) => (
             <TodoItem key={todo.id} todo={todo} index={index} />
           ))}
 
@@ -104,20 +104,20 @@ class App extends Component {
     });
   };
 
-  updateFilter = filter => {
-    this.setState({ filter });
-  };
+  // updateFilter = filter => {
+  //   this.setState({ filter });
+  // };
 
-  todosFiltered = () => {
-    if (this.state.filter === "all") {
-      return this.state.todos;
-    } else if (this.state.filter === "active") {
-      return this.state.todos.filter(x => !x.completed);
-    } else if (this.state.filter === "completed") {
-      return this.state.todos.filter(x => x.completed);
-    }
-    return this.state.todos;
-  };
+  // todosFiltered = () => {
+  //   if (this.state.filter === "all") {
+  //     return this.state.todos;
+  //   } else if (this.state.filter === "active") {
+  //     return this.state.todos.filter(x => !x.completed);
+  //   } else if (this.state.filter === "completed") {
+  //     return this.state.todos.filter(x => x.completed);
+  //   }
+  //   return this.state.todos;
+  // };
 
   // checkAllTodos = event => {
   //   event.persist();

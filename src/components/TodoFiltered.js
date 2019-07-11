@@ -1,35 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { inject, observer } from 'mobx-react';
 
 
-const TodoFiltered = props => {
+const TodoFiltered = inject('TodoStore')(observer (props => {
+  const TodoStore = props.TodoStore;
   return (
     <div>
       <button
-        onClick={event => props.updateFilter("all")}
-        className={props.filter === "all" ? "active" : ""}
+        onClick={event => TodoStore.updateFilter("all")}
+        className={TodoStore.filter === "all" ? "active" : ""}
       >
         All
       </button>
       <button
-        onClick={event => props.updateFilter("active")}
-        className={props.filter === "active" ? "active" : ""}
+        onClick={event => TodoStore.updateFilter("active")}
+        className={TodoStore.filter === "active" ? "active" : ""}
       >
         Active
       </button>
       <button
-        onClick={event => props.updateFilter("completed")}
-        className={props.filter === "completed" ? "active" : ""}
+        onClick={event => TodoStore.updateFilter("completed")}
+        className={TodoStore.filter === "completed" ? "active" : ""}
       >
         Completed
       </button>
     </div>
   );
-};
+}));
 
 TodoFiltered.propTypes = {
-    updateFilter: PropTypes.func.isRequired,
-    filter: PropTypes.string.isRequired
+    // updateFilter: PropTypes.func.isRequired,
+    // filter: PropTypes.string.isRequired
 };
 
 export default TodoFiltered;
