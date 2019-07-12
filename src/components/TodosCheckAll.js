@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {inject, observer} from 'mobx-react';
 
 const TodosCheckAll = inject('TodoStore')(observer(props => {
@@ -18,7 +17,7 @@ const TodosCheckAll = inject('TodoStore')(observer(props => {
 }));
 
 TodosCheckAll.propTypes = {
-    TodoStore: PropTypes.object.isRequired,
+    // TodoStore: PropTypes.object.isRequired,
 };
 
 export default TodosCheckAll;

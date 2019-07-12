@@ -86,7 +86,7 @@ class TodoStore {
   };
 
   @computed get anyRemaining() {
-    return this.remaining != 0;
+    return this.remaining !== 0;
   };
 
   @action updateFilter = filter => {
@@ -102,6 +102,14 @@ class TodoStore {
       return this.todos.filter(x => x.completed);
     }
     return this.todos;
+  };
+
+  @computed get todosCompletedCount() {
+    return this.todos.filter(x => x.completed).length;
+  };
+
+  @action clearCompleted = () => {
+    this.todos = this.todos.filter(todo => !todo.completed);
   };
 }
 

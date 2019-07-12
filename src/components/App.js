@@ -6,7 +6,7 @@ import TodoRemaining from "./TodoRemaining";
 import TodoItem from "./TodoItem";
 import TodosCheckAll from "./TodosCheckAll";
 import TodoFiltered from "./TodoFiltered";
-import TodoClearCompleted from "./TodoClearCompleted";
+import TodosClearCompleted from "./TodosClearCompleted";
 import { inject, observer } from "mobx-react";
 
 @inject("TodoStore")
@@ -38,19 +38,16 @@ class App extends Component {
           </div>
 
           <div className="extra-container">
-            <TodoFiltered
-              updateFilter={this.updateFilter}
-              filter={this.state.filter}
-            />
+            <TodoFiltered />
 
             <ReactCSSTransitionGroup
               transitionName="fade"
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
             >
-              {this.todosCompletedCount() > 0 && (
-                <TodoClearCompleted clearCompleted={this.clearCompleted} />
-              )}
+              {TodoStore.todosCompletedCount > 0 &&
+                <TodosClearCompleted />
+              }
             </ReactCSSTransitionGroup>
           </div>
         </div>
@@ -83,53 +80,6 @@ class App extends Component {
       }
     ]
   };
-
-  // remaining = () => {
-  //   return this.state.todos.filter(x => !x.completed).length;
-  // };
-
-  // anyRemaining = () => {
-  //   return this.remaining() != 0;
-  // };
-
-  todosCompletedCount = () => {
-    return this.state.todos.filter(x => x.completed).length;
-  };
-
-  clearCompleted = () => {
-    this.setState((prevState, props) => {
-      let todos = prevState.todos;
-      todos = todos.filter(todo => !todo.completed);
-      return { todos };
-    });
-  };
-
-  // updateFilter = filter => {
-  //   this.setState({ filter });
-  // };
-
-  // todosFiltered = () => {
-  //   if (this.state.filter === "all") {
-  //     return this.state.todos;
-  //   } else if (this.state.filter === "active") {
-  //     return this.state.todos.filter(x => !x.completed);
-  //   } else if (this.state.filter === "completed") {
-  //     return this.state.todos.filter(x => x.completed);
-  //   }
-  //   return this.state.todos;
-  // };
-
-  // checkAllTodos = event => {
-  //   event.persist();
-
-  //   this.setState((prevState, props) => {
-  //     let todos = prevState.todos;
-
-  //     todos.forEach(todo => (todo.completed = event.target.checked));
-
-  //     return { todos };
-  //   });
-  // };
 }
 
 export default App;
