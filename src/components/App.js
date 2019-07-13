@@ -28,9 +28,12 @@ class App extends Component {
             onKeyUp={TodoStore.addTodo}
           />
 
-          {TodoStore.todosFiltered.map((todo, index) => (
-            <TodoItem key={todo.id} todo={todo} index={index} />
-          ))}
+          {TodoStore.todosFiltered.map(todo => 
+            <TodoItem 
+              key={todo.id} 
+              todo={todo} 
+            />
+          )}
 
           <div className="extra-container">
             <TodosCheckAll />

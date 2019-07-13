@@ -10,14 +10,14 @@ const TodoItem = inject('TodoStore')(observer(props => {
       <div className="todo-item-left">
         <input
           type="checkbox"
-          onChange={(event) => TodoStore.checkTodo(props.todo, props.index, event)}
+          onChange={(event) => TodoStore.checkTodo(props.todo, event)}
           checked={props.todo.completed}
         />
 
         {!props.todo.editing && (
           <div
             className={"todo-item-label " + (props.todo.completed ? "completed" : "")}
-            onDoubleClick={(event) => TodoStore.editTodo(props.todo, props.index, event)}
+            onDoubleClick={(event) => TodoStore.editTodo(props.todo, event)}
           >
             {props.todo.title}
           </div>
@@ -28,18 +28,18 @@ const TodoItem = inject('TodoStore')(observer(props => {
             type="text"
             autoFocus
             defaultValue={props.todo.title}
-            onBlur={(event) => TodoStore.doneEdit(props.todo, props.index, event)}
+            onBlur={(event) => TodoStore.doneEdit(props.todo, event)}
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                TodoStore.doneEdit(props.todo, props.index, event);
+                TodoStore.doneEdit(props.todo, event);
               } else if (event.key === "Escape") {
-                TodoStore.cancelEdit(props.todo, props.index, event);
+                TodoStore.cancelEdit(props.todo, event);
               }
             }}
           />
         )}
       </div>
-      <div className="remove-item" onClick={(event) => TodoStore.deleteTodo(props.index)}>
+      <div className="remove-item" onClick={(event) => TodoStore.deleteTodo(props.todo.id)}>
         &times;
       </div>
     </div>
@@ -48,7 +48,6 @@ const TodoItem = inject('TodoStore')(observer(props => {
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
   // TodoStore: PropTypes.object.isRequired,
 };
 
